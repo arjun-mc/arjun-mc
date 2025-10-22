@@ -39,9 +39,10 @@
         }
     </script>
     <style>
-        .h-screen{
+        .h-screen {
             height: 120vh !important;
         }
+
         :where([class^="ri-"])::before {
             content: "\f3c2";
         }
@@ -234,7 +235,8 @@
                     </a>
                 </div>
                 <button
-                    class="bg-white text-primary px-8 py-4 !rounded-button font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 whitespace-nowrap">
+                    class="bg-white text-primary px-8 py-4 !rounded-button font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 whitespace-nowrap"
+                    onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">
                     View My Work
                 </button>
             </div>
