@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="https://static.readdy.ai/static/e.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arjun M C - Software Engineer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid #fff;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #fff }
+        }
+        
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .fade-in-up.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .skill-bar {
+            width: 0%;
+            transition: width 2s ease-in-out;
+        }
+        
+        .skill-bar.animate {
+            width: var(--skill-width);
+        }
+        
+        .floating-shape {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .timeline-item.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-item:nth-child(even) {
+            transform: translateX(50px);
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #3B82F6, #1E40AF);
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3B82F6;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="scroll-progress"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold text-gray-900">Arjun M C</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-primary transition-colors">About</a>
+                    <a href="#skills" class="nav-link text-gray-700 hover:text-primary transition-colors">Skills</a>
+                    <a href="#experience" class="nav-link text-gray-700 hover:text-primary transition-colors">Experience</a>
+                    <a href="#projects" class="nav-link text-gray-700 hover:text-primary transition-colors">Projects</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-primary transition-colors">Contact</a>
+                </div>
+                <button class="md:hidden w-8 h-8 flex items-center justify-center">
+                    <i class="ri-menu-line text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="floating-shape absolute top-20 left-20 w-20 h-20 bg-white/10 rounded-full"></div>
+        <div class="floating-shape absolute bottom-32 right-32 w-16 h-16 bg-white/10 rounded-lg" style="animation-delay: -2s;"></div>
+        <div class="floating-shape absolute top-1/2 left-1/4 w-12 h-12 bg-white/10 rounded-full" style="animation-delay: -4s;"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 text-center text-white">
+            <div class="fade-in-up">
+                <h1 class="text-6xl md:text-8xl font-bold mb-6">Arjun M C</h1>
+                <div class="text-2xl md:text-3xl mb-8 h-12 flex items-center justify-center">
+                    <span class="typewriter">Software Engineer</span>
+                </div>
+                <p class="text-xl mb-12 max-w-2xl mx-auto opacity-90">
+                    Passionate Angular developer with 4+ years of experience building scalable web applications and innovative digital solutions
+                </p>
+                <div class="flex justify-center space-x-6 mb-12">
+                    <a href="mailto:arjunmc506@gmail.com" class="w-12 h-12 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="ri-mail-line text-xl"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/arjunmc" class="w-12 h-12 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="ri-linkedin-fill text-xl"></i>
+                    </a>
+                    <a href="tel:+917559005201" class="w-12 h-12 flex items-center justify-center bg-white/20 rounded-full hover:bg-white/30 transition-all duration-300 hover:scale-110">
+                        <i class="ri-phone-line text-xl"></i>
+                    </a>
+                </div>
+                <button class="bg-white text-primary px-8 py-4 !rounded-button font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 whitespace-nowrap">
+                    View My Work
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 fade-in-up">About Me</h2>
+                <div class="w-24 h-1 bg-primary mx-auto fade-in-up"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in-up">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                        I'm a passionate Software Engineer with 4 years of specialized experience in Angular development. My expertise spans across modern web technologies including TypeScript, JavaScript, HTML, and CSS, with strong proficiency in Node.js fundamentals.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                        I excel at building RESTful APIs, optimizing performance, and delivering scalable, high-quality web applications within tight deadlines. My experience includes working with cutting-edge technologies and being the first in India to implement Google Wallet functionality.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary counter" data-target="3">0</div>
+                            <div class="text-gray-600">Years Experience</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-primary counter" data-target="15">0</div>
+                            <div class="text-gray-600">Projects Completed</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in-up">
+                    <div class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white">
+                        <h3 class="text-2xl font-bold mb-6">Quick Facts</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 flex items-center justify-center mr-3">
+                                    <i class="ri-map-pin-line"></i>
+                                </div>
+                                <span>Thrissur, Kerala, India</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 flex items-center justify-center mr-3">
+                                    <i class="ri-code-line"></i>
+                                </div>
+                                <span>Angular & Node.js Specialist</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 flex items-center justify-center mr-3">
+                                    <i class="ri-trophy-line"></i>
+                                </div>
+                                <span>First in India - Google Wallet Implementation</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-6 h-6 flex items-center justify-center mr-3">
+                                    <i class="ri-graduation-cap-line"></i>
+                                </div>
+                                <span>4+ Years Industry Experience</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 fade-in-up">Technical Skills</h2>
+                <div class="w-24 h-1 bg-primary mx-auto fade-in-up"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg fade-in-up">
+                    <div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-xl mb-6">
+                        <i class="ri-code-s-slash-line text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Frontend Development</h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Angular</span>
+                                <span class="text-gray-500">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-primary h-2 rounded-full" style="--skill-width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">TypeScript</span>
+                                <span class="text-gray-500">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-primary h-2 rounded-full" style="--skill-width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">HTML/CSS</span>
+                                <span class="text-gray-500">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-primary h-2 rounded-full" style="--skill-width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Bootstrap</span>
+                                <span class="text-gray-500">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-primary h-2 rounded-full" style="--skill-width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg fade-in-up">
+                    <div class="w-16 h-16 flex items-center justify-center bg-secondary/10 rounded-xl mb-6">
+                        <i class="ri-server-line text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Backend Development</h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Node.js</span>
+                                <span class="text-gray-500">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-secondary h-2 rounded-full" style="--skill-width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Express.js</span>
+                                <span class="text-gray-500">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-secondary h-2 rounded-full" style="--skill-width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">RESTful APIs</span>
+                                <span class="text-gray-500">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-secondary h-2 rounded-full" style="--skill-width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">MySQL</span>
+                                <span class="text-gray-500">75%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-secondary h-2 rounded-full" style="--skill-width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-lg fade-in-up">
+                    <div class="w-16 h-16 flex items-center justify-center bg-green-500/10 rounded-xl mb-6">
+                        <i class="ri-tools-line text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Tools & Technologies</h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">GitHub</span>
+                                <span class="text-gray-500">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-green-500 h-2 rounded-full" style="--skill-width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Azure</span>
+                                <span class="text-gray-500">75%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-green-500 h-2 rounded-full" style="--skill-width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">Postman</span>
+                                <span class="text-gray-500">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-green-500 h-2 rounded-full" style="--skill-width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-700">JMeter</span>
+                                <span class="text-gray-500">70%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="skill-bar bg-green-500 h-2 rounded-full" style="--skill-width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 fade-in-up">Professional Experience</h2>
+                <div class="w-24 h-1 bg-primary mx-auto fade-in-up"></div>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gray-300"></div>
+                
+                <div class="timeline-item mb-16">
+                    <div class="flex items-center mb-8">
+                        <div class="flex-1 pr-8 text-right">
+                            <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-primary">
+                                <div class="flex items-center justify-end mb-4">
+                                    <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">Current</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">Software Engineer</h3>
+                                <h4 class="text-lg text-primary font-semibold mb-2">Prudent Technologies Pvt Ltd</h4>
+                                <p class="text-gray-600 mb-4">December 2021 - Present • Ernakulam</p>
+                                <ul class="text-gray-700 space-y-2 text-left">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Designed and developed dynamic, responsive UIs using Angular, HTML, CSS, Bootstrap, and TypeScript for seamless cross-device experiences
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Developed and integrated secure RESTful APIs with Node.js and Express.js, implementing JWT, AES, JWE, and RSA encryption
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Implemented Azure Language Processing and wit.ai for advanced intent recognition and natural language understanding
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Optimized application performance, delivering scalable, maintainable solutions deployed on time
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center relative z-10">
+                            <i class="ri-code-line text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1 pl-8"></div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item mb-16">
+                    <div class="flex items-center mb-8">
+                        <div class="flex-1 pr-8"></div>
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center relative z-10">
+                            <i class="ri-wordpress-line text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1 pl-8">
+                            <div class="bg-white p-8 rounded-2xl shadow-lg border-r-4 border-secondary">
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">WordPress Developer</h3>
+                                <h4 class="text-lg text-secondary font-semibold mb-2">Offkrt Electronic Commerce Pvt Ltd</h4>
+                                <p class="text-gray-600 mb-4">January 2019 - June 2021 • Thrissur</p>
+                                <ul class="text-gray-700 space-y-2">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Delivered tailored WordPress solutions, including custom themes, plugins, and integrations to meet client-specific needs
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Created responsive and visually appealing websites using HTML5, CSS3, and Bootstrap
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Developed robust e-commerce websites with WordPress and WooCommerce
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-secondary rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Successfully developed websites for notable clients such as Splendid Homes and Karnaki Flowers
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="flex items-center mb-8">
+                        <div class="flex-1 pr-8 text-right">
+                            <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-green-500">
+                                <h3 class="text-2xl font-bold text-gray-900 mb-2">GIS Engineer</h3>
+                                <h4 class="text-lg text-green-500 font-semibold mb-2">NeST Information Technologies Pvt Ltd</h4>
+                                <p class="text-gray-600 mb-4">October 2017 - January 2019 • Ernakulam</p>
+                                <ul class="text-gray-700 space-y-2 text-left">
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Conducted detailed GIS analysis and created accurate maps using ArcGIS software
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Supported various geospatial projects with comprehensive mapping solutions
+                                    </li>
+                                    <li class="flex items-start">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                        Developed expertise in spatial data analysis and visualization techniques
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center relative z-10">
+                            <i class="ri-map-line text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1 pl-8"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 fade-in-up">Featured Projects</h2>
+                <div class="w-24 h-1 bg-primary mx-auto fade-in-up"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden md:col-span-2 lg:col-span-2">
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Automated Communication Platform (ACP)</h3>
+                            <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">Featured</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            A versatile software tool specialized in creating flow builders for omni-channel chatbots, currently focused on WhatsApp and RCS integration. Enhanced client engagement by 40%.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Angular</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Node.js</span>
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">WhatsApp API</span>
+                            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">RCS</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm">
+                            <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            December 2021 - Present
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-gray-900">Google Wallet Integration</h3>
+                            <div class="w-8 h-8 flex items-center justify-center bg-yellow-100 rounded-full">
+                                <i class="ri-trophy-line text-yellow-600"></i>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium mb-4 inline-block">
+                            First in India
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            Pioneered Google Wallet functionality implementation for Kochi Metro tickets, providing digital alternative to physical tickets.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Google Wallet API</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Angular</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm">
+                            <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            October 2023 - Present
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Prudent Payment Gateway</h3>
+                        <p class="text-gray-600 mb-6">
+                            Comprehensive payment gateway integration with leading platforms like Razorpay, PayU, and Paytm, featuring RSA encryption for secure transactions.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Razorpay</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">PayU</span>
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Paytm</span>
+                            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">RSA Encryption</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm">
+                            <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            October 2023 - Present
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Kochi Metro Ticket Booking</h3>
+                        <p class="text-gray-600 mb-6">
+                            Comprehensive ticket booking system for Kochi Metro with WhatsApp chatbot integration and secure JWE authentication for enhanced user experience.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Angular</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Node.js</span>
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">JWE Auth</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm">
+                            <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            October 2023 - Present
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Meta TSP</h3>
+                        <p class="text-gray-600 mb-6">
+                            Tech Provider platform for WhatsApp messaging services, enabling businesses to manage customer accounts, messaging templates, and delivery statuses.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">WhatsApp Cloud API</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Business API</span>
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">Angular</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm">
+                            <div class="w-4 h-4 flex items-center justify-center mr-2">
+                                <i class="ri-calendar-line"></i>
+                            </div>
+                            September 2024 - Present
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 fade-in-up">Get In Touch</h2>
+                <div class="w-24 h-1 bg-primary mx-auto fade-in-up"></div>
+                <p class="text-lg text-gray-600 mt-6 fade-in-up">
+                    Let's discuss your next project or collaboration opportunity
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="fade-in-up">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-xl mr-4">
+                                <i class="ri-mail-line text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">Email</div>
+                                <a href="mailto:arjunmc506@gmail.com" class="text-primary hover:underline">arjunmc506@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-xl mr-4">
+                                <i class="ri-phone-line text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">Phone</div>
+                                <a href="tel:+917559005201" class="text-primary hover:underline">+91 7559005201</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-xl mr-4">
+                                <i class="ri-map-pin-line text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">Location</div>
+                                <div class="text-gray-600">Thrissur, Kerala, India</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-xl mr-4">
+                                <i class="ri-linkedin-fill text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">LinkedIn</div>
+                                <a href="https://linkedin.com/in/arjunmc" class="text-primary hover:underline">linkedin.com/in/arjunmc</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in-up">
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="Your Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="your.email@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="Project Collaboration">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 resize-none" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white py-3 px-6 !rounded-button font-semibold hover:bg-secondary transition-all duration-300 hover:scale-105 whitespace-nowrap">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="text-2xl font-bold mb-4">Arjun M C</div>
+            <p class="text-gray-400 mb-6">Software Engineer • Angular Specialist • Innovation Enthusiast</p>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="mailto:arjunmc506@gmail.com" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors duration-300">
+                    <i class="ri-mail-line"></i>
+                </a>
+                <a href="https://linkedin.com/in/arjunmc" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors duration-300">
+                    <i class="ri-linkedin-fill"></i>
+                </a>
+                <a href="tel:+917559005201" class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors duration-300">
+                    <i class="ri-phone-line"></i>
+                </a>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-gray-400">&copy; 2024 Arjun M C. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script id="scroll-progress">
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                scrollProgress.style.width = scrollPercent + '%';
+            });
+        });
+    </script>
+
+    <script id="scroll-animations">
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up, .timeline-item').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+    <script id="skill-bars">
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const skillBars = entry.target.querySelectorAll('.skill-bar');
+                        skillBars.forEach(bar => {
+                            setTimeout(() => {
+                                bar.classList.add('animate');
+                            }, 300);
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('#skills .fade-in-up').forEach(el => {
+                skillObserver.observe(el);
+            });
+        });
+    </script>
+
+    <script id="counters">
+        document.addEventListener('DOMContentLoaded', function() {
+            const counterObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-target'));
+                        let current = 0;
+                        const increment = target / 100;
+                        
+                        const updateCounter = () => {
+                            if (current < target) {
+                                current += increment;
+                                counter.textContent = Math.ceil(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = target;
+                            }
+                        };
+                        
+                        updateCounter();
+                        counterObserver.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.counter').forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        });
+    </script>
+
+    <script id="navigation">
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section[id]');
+
+            function updateActiveNav() {
+                const scrollPos = window.scrollY + 100;
+                
+                sections.forEach(section => {
+                    const top = section.offsetTop;
+                    const bottom = top + section.offsetHeight;
+                    const id = section.getAttribute('id');
+                    
+                    if (scrollPos >= top && scrollPos <= bottom) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script id="form-handling">
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('#contact form');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const button = form.querySelector('button[type="submit"]');
+                const originalText = button.textContent;
+                
+                button.textContent = 'Sending...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.textContent = 'Message Sent!';
+                    button.classList.remove('bg-primary');
+                    button.classList.add('bg-green-500');
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.classList.remove('bg-green-500');
+                        button.classList.add('bg-primary');
+                        button.disabled = false;
+                        form.reset();
+                    }, 2000);
+                }, 1000);
+            });
+        });
+    </script>
+</html>
