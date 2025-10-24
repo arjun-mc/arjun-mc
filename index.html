@@ -39,14 +39,9 @@
         }
     </script>
     <style>
-        /*
-        * CHANGE 1: Remove body zoom for proper mobile rendering.
-        * Apply zoom only for larger screens if necessary.
-        */
-
         @media (min-width: 1024px) {
             body {
-                zoom: 0.9; /* Slightly reduce zoom for large screens, keep it at 1 for mobile */
+                zoom: 0.9;
             }
         }
 
@@ -54,12 +49,8 @@
             content: "\f3c2";
         }
 
-        /*
-        * CHANGE 2: Reduce hero-bg height for a better mobile viewport experience.
-        * From 120vh to a more standard min-h-screen/h-[80vh] based on content.
-        */
         .hero-bg {
-            height: 100vh; /* Adjusting for a better fit on mobile devices */
+            height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
@@ -95,7 +86,7 @@
         .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.6s ease-out;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .fade-in-up.animate {
@@ -131,7 +122,7 @@
         .timeline-item {
             opacity: 0;
             transform: translateX(-50px);
-            transition: all 0.6s ease-out;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .timeline-item.animate {
@@ -139,28 +130,33 @@
             transform: translateX(0);
         }
 
-        /* Adjusted timeline for better mobile flow (single column focus) */
-        @media (max-width: 639px) { /* Targeting smaller screens */
+        @media (max-width: 639px) {
             .timeline-item {
-                transform: translateX(0px); /* Remove horizontal offset on mobile */
+                transform: translateX(0px);
             }
+
             .timeline-item:nth-child(even) {
-                transform: translateX(0px); /* Ensure even items are not offset */
+                transform: translateX(0px);
             }
+
             .timeline-item .pr-8 {
-                padding-right: 0; /* Remove right padding on text for left-aligned items */
+                padding-right: 0;
             }
+
             .timeline-item .pl-8 {
-                padding-left: 0; /* Remove left padding on text for right-aligned items */
+                padding-left: 0;
             }
+
             .timeline-item .flex-1.pr-8 {
-                display: none; /* Hide empty column for right-aligned items */
+                display: none;
             }
+
             .timeline-item .flex-1.pl-8 {
-                flex: 1; /* Make the content column take full width */
+                flex: 1;
             }
+
             .timeline-item .text-right {
-                text-align: left; /* Force content text alignment to left on mobile */
+                text-align: left;
             }
         }
 
@@ -198,10 +194,6 @@
             transform: translateX(0);
         }
 
-        /*
-        * CHANGE 3: Simplified mobile media query for cleaner implementation,
-        * since the zoom is now handled via min-width.
-        */
         @media (max-width: 768px) {
             .hero-bg h1 {
                 font-size: 2.5rem !important;
@@ -230,6 +222,90 @@
         .nav-link:hover::after,
         .nav-link.active::after {
             width: 100%;
+        }
+
+        /* --- ENHANCED MOBILE MENU STYLES --- */
+        .mobile-nav-link {
+            border-radius: 12px;
+            /* Slightly larger radius */
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly brighter hover */
+            color: white;
+        }
+
+        .mobile-nav-link.active {
+            background: #3B82F6; /* Primary color background */
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+            transform: translateX(4px);
+        }
+
+        /* --- NEW CHATBOT WIDGET STYLES --- */
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            z-index: 1000;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #chatbot-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        #chatbot-window {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 90vw;
+            max-width: 380px;
+            height: 70vh;
+            max-height: 500px;
+            background: #f9fafb;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transform: translateY(20px) scale(0.8);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chatbot-window.open {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+        }
+
+        .chat-bubble {
+            font-size: 0.95rem;
+        }
+
+        .chat-bubble.user {
+            background-color: #3B82F6;
+            color: white;
+            border-radius: 12px 12px 2px 12px;
+            align-self: flex-end;
+        }
+
+        .chat-bubble.bot {
+            background-color: #E5E7EB;
+            color: #1F2937;
+            border-radius: 12px 12px 12px 2px;
+            align-self: flex-start;
         }
     </style>
 </head>
@@ -268,42 +344,42 @@
                 <div class="flex-1 px-4 py-4 overflow-y-auto bg-gradient-to-b" style="min-height: 79vh;">
                     <div class="space-y-1">
                         <a href="#home"
-                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-xl group">
+                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white transition-all duration-300 py-3 px-3 group">
                             <div class="w-5 h-5 flex items-center justify-center">
                                 <i class="ri-home-line group-hover:scale-110 transition-transform"></i>
                             </div>
                             <span class="font-medium text-base">Home</span>
                         </a>
                         <a href="#about"
-                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-xl group">
+                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white transition-all duration-300 py-3 px-3 group">
                             <div class="w-5 h-5 flex items-center justify-center">
                                 <i class="ri-user-line group-hover:scale-110 transition-transform"></i>
                             </div>
                             <span class="font-medium text-base">About</span>
                         </a>
                         <a href="#skills"
-                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-xl group">
+                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white transition-all duration-300 py-3 px-3 group">
                             <div class="w-5 h-5 flex items-center justify-center">
                                 <i class="ri-code-s-slash-line group-hover:scale-110 transition-transform"></i>
                             </div>
                             <span class="font-medium text-base">Skills</span>
                         </a>
                         <a href="#experience"
-                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-xl group">
+                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white transition-all duration-300 py-3 px-3 group">
                             <div class="w-5 h-5 flex items-center justify-center">
                                 <i class="ri-briefcase-line group-hover:scale-110 transition-transform"></i>
                             </div>
                             <span class="font-medium text-base">Experience</span>
                         </a>
                         <a href="#projects"
-                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-xl group">
+                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white transition-all duration-300 py-3 px-3 group">
                             <div class="w-5 h-5 flex items-center justify-center">
                                 <i class="ri-folder-line group-hover:scale-110 transition-transform"></i>
                             </div>
                             <span class="font-medium text-base">Projects</span>
                         </a>
                         <a href="#contact"
-                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300 py-3 px-3 rounded-xl group">
+                            class="mobile-nav-link flex items-center space-x-3 text-white/80 hover:text-white transition-all duration-300 py-3 px-3 group">
                             <div class="w-5 h-5 flex items-center justify-center">
                                 <i class="ri-mail-line group-hover:scale-110 transition-transform"></i>
                             </div>
@@ -441,7 +517,7 @@
                 <div class="w-16 sm:w-24 h-1 bg-primary mx-auto fade-in-up"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in-up">
+                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in-up" data-animation-delay="0s">
                     <div
                         class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-xl mb-4">
                         <i class="ri-code-s-slash-line text-xl text-primary"></i>
@@ -486,7 +562,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in-up">
+                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in-up" data-animation-delay="0.1s">
                     <div class="w-12 h-12 flex items-center justify-center bg-secondary/10 rounded-xl mb-4">
                         <i class="ri-server-line text-xl text-secondary"></i>
                     </div>
@@ -530,7 +606,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in-up">
+                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in-up" data-animation-delay="0.2s">
                     <div class="w-12 h-12 flex items-center justify-center bg-green-500/10 rounded-xl mb-4">
                         <i class="ri-tools-line text-xl text-green-500"></i>
                     </div>
@@ -586,22 +662,24 @@
             </div>
             <div class="relative">
                 <div class="absolute left-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 w-1 h-full bg-gray-300"></div>
+
                 <div class="timeline-item mb-10 sm:mb-16 animate">
-                    <div class="flex items-start mb-8 sm:items-center">
-                        <div class="hidden sm:flex flex-1 pr-8 text-right">
-                             </div>
-                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center relative z-10 flex-shrink-0">
+                    <div class="flex items-start flex-row-reverse sm:flex-row-reverse mb-8 sm:items-center">
+                        <div class="hidden sm:flex flex-1 pl-8"> </div>
+                        <div
+                            class="w-8 h-8 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center relative z-10 flex-shrink-0">
                             <i class="ri-code-line text-white text-lg sm:text-xl"></i>
                         </div>
-                        <div class="flex-1 sm:pl-8 mt-[-8px] sm:mt-0">
-                             <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-l-4 border-primary ml-4 sm:ml-0">
-                                <div class="flex items-center justify-start mb-4">
+                        <div class="flex-1 sm:pr-8 mt-[-8px] sm:mt-0">
+                            <div
+                                class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-l-4 sm:border-r-4 border-primary ml-4 sm:ml-0 sm:border-l-0">
+                                <div class="flex items-center justify-start mb-4 sm:justify-end">
                                     <span
                                         class="bg-primary text-white px-3 py-1 rounded-full text-xs font-medium">Current</span>
                                 </div>
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Software Engineer</h3>
-                                <h4 class="text-base sm:text-lg text-primary font-semibold mb-2">Prudent Technologies Pvt Ltd</h4>
-                                <p class="text-gray-600 mb-4 text-sm">December 2021 - Present • Ernakulam</p>
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:text-right">Software Engineer</h3>
+                                <h4 class="text-base sm:text-lg text-primary font-semibold mb-2 sm:text-right">Prudent Technologies Pvt Ltd</h4>
+                                <p class="text-gray-600 mb-4 text-sm sm:text-right">December 2021 - Present • Ernakulam</p>
                                 <ul class="text-gray-700 space-y-2 text-left text-sm">
                                     <li class="flex items-start">
                                         <div class="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -628,15 +706,16 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="timeline-item mb-10 sm:mb-16">
-                    <div class="flex items-start flex-row-reverse sm:flex-row mb-8 sm:items-center">
-                        <div class="hidden sm:flex flex-1 pr-8">
-                            </div>
-                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center relative z-10 flex-shrink-0">
+                    <div class="flex items-start mb-8 sm:items-center">
+                        <div class="hidden sm:flex flex-1 pr-8 text-right"> </div>
+                        <div
+                            class="w-8 h-8 sm:w-12 sm:h-12 bg-secondary rounded-full flex items-center justify-center relative z-10 flex-shrink-0">
                             <i class="ri-wordpress-line text-white text-lg sm:text-xl"></i>
                         </div>
                         <div class="flex-1 sm:pl-8 mt-[-8px] sm:mt-0">
-                            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-l-4 sm:border-r-4 border-secondary ml-4 sm:ml-0 sm:border-l-0">
+                            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-l-4 border-secondary ml-4 sm:ml-0">
                                 <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">WordPress Developer</h3>
                                 <h4 class="text-base sm:text-lg text-secondary font-semibold mb-2">Offkrt Electronic Commerce Pvt Ltd
                                 </h4>
@@ -666,39 +745,21 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="timeline-item">
-                    <div class="flex items-start mb-8 sm:items-center">
-                         <div class="hidden sm:flex flex-1 pr-8 text-right">
-                            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-l-4 border-green-500">
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">GIS Engineer</h3>
-                                <h4 class="text-base sm:text-lg text-green-500 font-semibold mb-2">NeST Information Technologies Pvt
-                                    Ltd</h4>
-                                <p class="text-gray-600 mb-4 text-sm">October 2017 - January 2019 • Ernakulam</p>
-                                <ul class="text-gray-700 space-y-2 text-left text-sm">
-                                    <li class="flex items-start">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                                        Conducted detailed GIS analysis and created accurate maps using ArcGIS software
-                                    </li>
-                                    <li class="flex items-start">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                                        Supported various geospatial projects with comprehensive mapping solutions
-                                    </li>
-                                    <li class="flex items-start">
-                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                                        Developed expertise in spatial data analysis and visualization techniques
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="w-8 h-8 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center relative z-10 flex-shrink-0">
+                    <div class="flex items-start flex-row-reverse sm:flex-row-reverse mb-8 sm:items-center">
+                        <div class="hidden sm:flex flex-1 pl-8"> </div>
+                        <div
+                            class="w-8 h-8 sm:w-12 sm:h-12 bg-green-500 rounded-full flex items-center justify-center relative z-10 flex-shrink-0">
                             <i class="ri-map-line text-white text-lg sm:text-xl"></i>
                         </div>
-                        <div class="flex-1 sm:pl-8 mt-[-8px] sm:mt-0">
-                            <div class="sm:hidden bg-white p-6 rounded-2xl shadow-lg border-l-4 border-green-500 ml-4">
-                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">GIS Engineer</h3>
-                                <h4 class="text-base sm:text-lg text-green-500 font-semibold mb-2">NeST Information Technologies Pvt
+                        <div class="flex-1 sm:pr-8 mt-[-8px] sm:mt-0">
+                            <div
+                                class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border-l-4 sm:border-r-4 border-green-500 ml-4 sm:ml-0 sm:border-l-0">
+                                <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:text-right">GIS Engineer</h3>
+                                <h4 class="text-base sm:text-lg text-green-500 font-semibold mb-2 sm:text-right">NeST Information Technologies Pvt
                                     Ltd</h4>
-                                <p class="text-gray-600 mb-4 text-sm">October 2017 - January 2019 • Ernakulam</p>
+                                <p class="text-gray-600 mb-4 text-sm sm:text-right">October 2017 - January 2019 • Ernakulam</p>
                                 <ul class="text-gray-700 space-y-2 text-left text-sm">
                                     <li class="flex items-start">
                                         <div class="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -728,7 +789,7 @@
                 <div class="w-16 sm:w-24 h-1 bg-primary mx-auto fade-in-up"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden lg:col-span-2">
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden lg:col-span-2 fade-in-up" data-animation-delay="0s">
                     <div class="p-6 sm:p-8">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                             <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-0">Automated
@@ -759,7 +820,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in-up" data-animation-delay="0.1s">
                     <div class="p-6 sm:p-8">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg sm:text-xl font-bold text-gray-900">Google Wallet Integration</h3>
@@ -788,7 +849,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in-up" data-animation-delay="0.2s">
                     <div class="p-6 sm:p-8">
                         <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4">Prudent Payment Gateway</h3>
                         <p class="text-gray-600 mb-6 text-sm sm:text-base">
@@ -809,7 +870,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in-up" data-animation-delay="0.3s">
                     <div class="p-6 sm:p-8">
                         <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4">Kochi Metro Ticket Booking</h3>
                         <p class="text-gray-600 mb-6 text-sm sm:text-base">
@@ -829,7 +890,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="project-card bg-white rounded-2xl shadow-lg overflow-hidden fade-in-up" data-animation-delay="0.4s">
                     <div class="p-6 sm:p-8">
                         <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4">Meta TSP</h3>
                         <p class="text-gray-600 mb-6 text-sm sm:text-base">
@@ -862,13 +923,13 @@
                     Let's discuss your next project or collaboration opportunity
                 </p>
             </div>
-            <div class="grid md:grid-cols-2 gap-8 sm:gap-12">
-                <div class="fade-in-up mb-8 md:mb-0">
-                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
-                    <div class="space-y-4">
+            <div class="max-w-xl">
+                <div class="fade-in-up">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-6 text-left">Contact Information</h3>
+                    <div class="space-y-4 max-w-sm">
                         <div class="flex items-center">
                             <div
-                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3">
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3 flex-shrink-0">
                                 <i class="ri-mail-line text-primary text-lg"></i>
                             </div>
                             <div>
@@ -878,7 +939,7 @@
                             </div>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3">
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3 flex-shrink-0">
                                 <i class="ri-phone-line text-primary text-lg"></i>
                             </div>
                             <div>
@@ -887,7 +948,7 @@
                             </div>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3">
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3 flex-shrink-0">
                                 <i class="ri-map-pin-line text-primary text-lg"></i>
                             </div>
                             <div>
@@ -896,7 +957,7 @@
                             </div>
                         </div>
                         <div class="flex items-center">
-                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3">
+                            <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-xl mr-3 flex-shrink-0">
                                 <i class="ri-linkedin-fill text-primary text-lg"></i>
                             </div>
                             <div>
@@ -907,41 +968,48 @@
                         </div>
                     </div>
                 </div>
-                <div class="fade-in-up">
-                    <form class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
-                            <input type="text"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
-                                placeholder="Your Name">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                            <input type="email"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
-                                placeholder="your.email@example.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                            <input type="text"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300"
-                                placeholder="Project Collaboration">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea rows="4"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 resize-none"
-                                placeholder="Tell me about your project..."></textarea>
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-primary text-white py-3 px-6 !rounded-button font-semibold hover:bg-secondary transition-all duration-300 hover:scale-105 whitespace-nowrap">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
             </div>
         </div>
     </section>
+
+    <div id="chatbot-toggle"
+        class="bg-primary text-white rounded-full flex items-center justify-center cursor-pointer shadow-xl">
+        <i id="chat-icon" class="ri-wechat-line text-2xl"></i>
+    </div>
+
+    <div id="chatbot-window">
+        <div class="chat-header p-4 rounded-t-xl flex items-center justify-between shadow">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-3">
+                    <i class="ri-robot-line text-white text-xl"></i>
+                </div>
+                <div>
+                    <div class="text-white font-semibold">Arjun's Assistant</div>
+                    <div class="text-green-300 text-xs">Online</div>
+                </div>
+            </div>
+            <button id="chatbot-close" class="text-white/80 hover:text-white transition-colors p-1 rounded-full">
+                <i class="ri-close-line text-xl"></i>
+            </button>
+        </div>
+
+        <div id="chat-messages" class="flex-1 p-4 space-y-4 overflow-y-auto" data-initial-cleared="false">
+            <div class="chat-bubble bot p-3 max-w-[80%]">
+                Hello! I'm Arjun's portfolio assistant. Ask me about his **Angular**, **Node.js**, or **Chatbot** experience!
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-200 bg-white rounded-b-xl">
+            <div class="flex items-center">
+                <input type="text" id="chat-input" placeholder="Type a message..."
+                    class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition-colors text-sm">
+                <button id="chat-send" class="ml-3 w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-secondary transition-colors">
+                    <i class="ri-send-plane-fill"></i>
+                </button>
+            </div>
+            <p class="text-xs text-center text-gray-500 mt-2">Chat is a demo, now interactive with rule-based responses.</p>
+        </div>
+    </div>
     <footer class="bg-gray-900 text-white py-10">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <div class="text-xl font-bold mb-3">Arjun M C</div>
@@ -985,6 +1053,10 @@
             const observer = new IntersectionObserver(function (entries) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
+                        const delay = entry.target.getAttribute('data-animation-delay');
+                        if (delay) {
+                            entry.target.style.transitionDelay = delay;
+                        }
                         entry.target.classList.add('animate');
                     }
                 });
@@ -1050,6 +1122,7 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
             const mobileBackdrop = document.getElementById('mobile-backdrop');
+
             function updateActiveNav() {
                 const scrollPos = window.scrollY + 100;
                 sections.forEach(section => {
@@ -1057,7 +1130,15 @@
                     const bottom = top + section.offsetHeight;
                     const id = section.getAttribute('id');
                     if (scrollPos >= top && scrollPos <= bottom) {
+                        // Update desktop links
                         navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                        // Update mobile links (for enhanced design)
+                        mobileNavLinks.forEach(link => {
                             link.classList.remove('active');
                             if (link.getAttribute('href') === `#${id}`) {
                                 link.classList.add('active');
@@ -1066,6 +1147,7 @@
                     }
                 });
             }
+
             function toggleMobileMenu() {
                 mobileMenu.classList.toggle('active');
                 mobileBackdrop.classList.toggle('hidden');
@@ -1094,31 +1176,107 @@
                     }
                 });
             });
+            updateActiveNav(); // Call on load to set initial active link
         });
     </script>
-    <script id="form-handling">
+    <script id="chatbot-toggle-script">
         document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('#contact form');
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                const formData = new FormData(form);
-                const button = form.querySelector('button[type="submit"]');
-                const originalText = button.textContent;
-                button.textContent = 'Sending...';
-                button.disabled = true;
+            const toggleButton = document.getElementById('chatbot-toggle');
+            const closeButton = document.getElementById('chatbot-close');
+            const chatWindow = document.getElementById('chatbot-window');
+            const chatIcon = document.getElementById('chat-icon');
+
+            function toggleChat() {
+                const isOpen = chatWindow.classList.toggle('open');
+                if (isOpen) {
+                    chatIcon.classList.remove('ri-wechat-line');
+                    chatIcon.classList.add('ri-close-line');
+                } else {
+                    chatIcon.classList.remove('ri-close-line');
+                    chatIcon.classList.add('ri-wechat-line');
+                }
+            }
+
+            toggleButton.addEventListener('click', toggleChat);
+            closeButton.addEventListener('click', toggleChat);
+        });
+    </script>
+    <script id="chatbot-functional-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const messagesContainer = document.getElementById('chat-messages');
+            const input = document.getElementById('chat-input');
+            const sendButton = document.getElementById('chat-send');
+            const toggleButton = document.getElementById('chatbot-toggle');
+
+            function createBubble(text, sender) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('chat-bubble', sender, 'p-3', 'max-w-[80%]', 'break-words');
+                if (sender === 'user') {
+                    bubble.classList.add('ml-auto');
+                }
+                // Use innerHTML to allow for formatting like **bold** in bot responses
+                bubble.innerHTML = text;
+                messagesContainer.appendChild(bubble);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            function getBotResponse(userMessage) {
+                const msg = userMessage.toLowerCase().trim();
+
+                if (msg.includes('angular') || msg.includes('frontend')) {
+                    return "Arjun is an **Angular Specialist** with 4+ years of experience. He focuses on building dynamic, responsive UIs using Angular, TypeScript, HTML, and CSS.";
+                } else if (msg.includes('node') || msg.includes('backend') || msg.includes('api')) {
+                    return "He is proficient in **Node.js and Express.js** for developing and integrating secure **RESTful APIs**, including implementing JWT and various encryption methods.";
+                } else if (msg.includes('experience') || msg.includes('years')) {
+                    return "Arjun has **4 years** of professional experience in software engineering.";
+                } else if (msg.includes('chatbot') || msg.includes('chatbots')) {
+                    return "Arjun developed the **Automated Communication Platform (ACP)**, a flow builder for omni-channel chatbots (WhatsApp/RCS).";
+                } else if (msg.includes('wallet') || msg.includes('google')) {
+                    return "He pioneered the **Google Wallet integration** for Kochi Metro tickets—a first in India.";
+                } else if (msg.includes('contact') || msg.includes('hire')) {
+                    return "You can find his contact information in the **Contact** section: arjunmc506@gmail.com or +91 7559005201.";
+                } else if (msg.includes('skill')) {
+                    return "Arjun's key skills include: **Angular, TypeScript, Node.js, RESTful APIs, Azure, and GitHub**. What specific skill are you interested in?";
+                } else if (msg.includes('hello') || msg.includes('hi')) {
+                    return "Hi there! I can answer questions about Arjun's portfolio, skills, and projects. Ask me anything!";
+                } else {
+                    return "I'm a simple demo bot. I can answer questions about **Angular, Node.js, Chatbots, Google Wallet,** and his **Experience**. Try asking one of those topics!";
+                }
+            }
+
+            function sendMessage() {
+                const userMessage = input.value.trim();
+                if (userMessage === '') return;
+
+                // 1. Add user message
+                createBubble(userMessage, 'user');
+                input.value = '';
+                input.focus();
+
+                // 2. Get and add bot response after a short delay
+                const botResponse = getBotResponse(userMessage);
                 setTimeout(() => {
-                    button.textContent = 'Message Sent!';
-                    button.classList.remove('bg-primary');
-                    button.classList.add('bg-green-500');
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                        button.classList.remove('bg-green-500');
-                        button.classList.add('bg-primary');
-                        button.disabled = false;
-                        form.reset();
-                    }, 2000);
-                }, 1000);
+                    createBubble(botResponse, 'bot');
+                }, 500);
+            }
+
+            sendButton.addEventListener('click', sendMessage);
+
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
             });
+
+            // Optional: Clear initial messages on first open, but here we kept a single greeting
+            // if you wanted to clear and re-greet:
+            // toggleButton.addEventListener('click', function() {
+            //     if (messagesContainer.dataset.initialCleared !== 'true') {
+            //          messagesContainer.innerHTML = '';
+            //          createBubble("Hello! I'm Arjun's portfolio assistant. Ask me about his **Angular**, **Node.js**, or **Chatbot** experience!", 'bot');
+            //          messagesContainer.dataset.initialCleared = 'true';
+            //     }
+            // });
         });
     </script>
 </body>
